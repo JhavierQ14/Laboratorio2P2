@@ -1,0 +1,45 @@
+﻿@model Laboratorio2.Models.ViewModels.ViewModelsPersona;
+@{
+    ViewData["Title"] = "Save";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <title>Document</title>
+</head>
+
+
+<body>
+    <h2 class="animate__animated animate__fadeInDown"><i class="fas fa-registered"></i>Registros</h2>
+
+
+    @using (Html.BeginForm("Save", "Home", FormMethod.Post))
+    {
+
+
+        @Html.LabelFor(n => n.NombrePersona) 
+        @Html.TextBoxFor(n => n.NombrePersona)
+        @Html.ValidationMessageFor(n => n.NombrePersona)
+        <br />
+        @Html.LabelFor(n => n.EdadPersona)
+        @Html.TextBoxFor(n => n.EdadPersona)
+        @Html.ValidationMessageFor(n => n.EdadPersona)
+        <br />
+        @Html.LabelFor(n => n.DescripcionPersona)
+        @Html.TextBoxFor(n => n.DescripcionPersona)
+        @Html.ValidationMessageFor(n => n.DescripcionPersona)
+        <br />
+        <br />
+       
+
+        <input type="submit" i class="fas fa-save" />
+
+
+
+    }
+</body>
+</html>
+

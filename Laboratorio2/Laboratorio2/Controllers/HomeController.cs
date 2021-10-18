@@ -1,4 +1,7 @@
-﻿using Laboratorio2.Models;
+﻿using Laboratorio2.Entidad;
+using Laboratorio2.Models;
+using Laboratorio2.Models.ViewModels;
+using Laboratorio2.Servicios;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,10 +16,70 @@ namespace Laboratorio2.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private IPersona ipersona;
+
+
+        public HomeController(ILogger<HomeController> logger, IPersona ipersona)
         {
+            this.ipersona = ipersona;
             _logger = logger;
+
         }
+        // ----------------------------------------------------------------------------------------------------
+        public IActionResult MostrarDatos()
+        {
+            return View();
+        }
+        //---------------------------------------------------------------------------------------------------------
+        
+        public IActionResult Save(ViewModelsPersona persona)
+
+        {
+
+            persona per = new persona();
+
+            if (ModelState.IsValid)
+            {
+
+
+                if (persona.EdadPersona >= 18)
+                {
+                    per.NombrePersona = persona.NombrePersona;
+                    per.EdadPersona = persona.EdadPersona;
+                    per.DescripcionPersona = persona.DescripcionPersona;
+
+                    ipersona.Save(per);
+                    return View("MostrarDatos");
+
+
+                }
+                else
+                {
+                    return Redirect("/Home/Save");
+                }
+
+
+            }
+            else
+            {
+                return View("Save");
+
+            }
+        }
+    
+        //-------------------------------------------------------------------------------------------------------
+
+        public IActionResult GetAll()
+        {
+
+            var DandoFormatoJson = ipersona.ListarDatos();
+
+
+            return Json(new { data = DandoFormatoJson });
+        }
+
+
+        //-----------------------------------------------------------------------
 
         public IActionResult Index()
         {
